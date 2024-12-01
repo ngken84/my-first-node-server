@@ -30,6 +30,34 @@ Node uses one thread that is running on an event loop.
 
 Executes code when events happen and keeps running listening for events. There may be some multithreading happening in the back. But conceptually it is a loop.
 
+How can it handle so many requests if there is only one thread?
+Is it a security issue?
+Is it a performance issue?
+
+### Performance
+
+If we access file systems, the second request may have to wait for a single file to be processed. If we look at the Event Loop, the event loop handles callbacks. The operation of the file system will happen outside of the event loop and the event loop will handle the callbacks.
+
+Long taking operations are handled by a "Worker Pool" that spins up workers when needed. It is detached from your code. If you are using a file, a worker is spooled up and the worker then triggers the callback which is handled by the event loop. 
+
+This is built into NodeJS and doesn't require you to manage it.
+
+### The Event Loop Callbacks
+
+The order is:
+1. Timer and setIntervals and Timeouts
+2. Pending Callbacks: if there are too many of these callbacks, it can "postpone them"
+    File operations, network operations
+3. Poll Phase : look for new I/O events and execute their callbacks. Also check Timer callbacks and jump back to #1 if needed
+4. setImmediate callbacks
+5. Close Callbacks - execute all 'close' event callbacks
+6. Maybe exit? if there are no remaining event handlers (refs == 0) <= counts all event listeners to be handled. Will normally never exit because value will at least be 1 because of server.listen() call
+
+### Security
+
+How do we prevent data from being spoiled. Keep functions scoped to itself!
+
+
 ## Request Objects
 
 Lots of data with data and functions that can be called on it.
