@@ -114,3 +114,38 @@ fs.writeFile('message.txt', "hello world", (err) => {
 });
 ```
 This is why NodeJS is powerful, code is always running.
+
+## Debug Tips!
+
+### How to not have to restart the server whenever changes are made
+
+We need to add a 3rd party package to do this:
+```
+npm install nodemon --save-dev
+```
+Then we can update the start script to :
+```
+"start" : "nodemon ./dist/app.js"
+```
+
+### Understanding Errors
+
+How do we find and fix errors in our code?
+
+#### Types of Errors
+
+##### Syntax Errors
+Typos in your code. 
+
+How to deal with them? Typescript, duh. Also the IDE will catch a lot of them. The app will not even be able to run. 
+
+##### Runtime Errors
+Code that breaks when it runs.
+
+How to deal with these? You will generally get an error message in the terminal. At the top of the error message you will get
+- an error code
+- a detailed error message
+- a line number somewhere in the stack trace.
+
+##### Logical Errors
+Don't see error message, the app just doesn't work the way it should.
