@@ -149,3 +149,35 @@ How to deal with these? You will generally get an error message in the terminal.
 
 ##### Logical Errors
 Don't see error message, the app just doesn't work the way it should.
+
+Using the Node JS debugger:
+1. Go to Debug is VSC and select Start Debugging (F5) and select Node JS
+2. Now we have controls to debugging. We can now look at code as it is running, but we must set BREAK POINTS
+3. Set a break point 
+4. Run the code and now hit the break point. You can now hover over code and see what values are in variables
+5. Go to View => Debug
+    - View variables 
+    - View Call stack
+    - View Breakpoints
+6. You can also step through the code and see the code run, line by line. 
+7. You can even run code in the debug terminal to manipulate the variables (but this cannot affect the code above)
+
+For more: https://code.visualstudio.com/docs/nodejs/nodejs-debugging
+
+#### Adding Debug to the workflow
+
+Go to Debug => Add Configuration
+
+This adds a .vscode/launch.json
+```
+"configuration": [
+    {
+        "type": "node",
+        ...
+        "restart": true,
+        "runtimeExecutable": "nodemon",
+        "consol": "integratedTerminal"
+    }
+]
+```
+This will also set the main entry point for the debugger. You will need to install nodemon globally though!
